@@ -3,6 +3,11 @@
  */
 package it.unibo.oop.lab.enum2;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import it.unibo.oop.lab.socialnetwork.SocialNetworkUserImpl;
 import it.unibo.oop.lab.socialnetwork.User;
 
@@ -30,7 +35,7 @@ public class Sport2SocialNetworkUserImpl<U extends User> extends SocialNetworkUs
      * 
      * add a field to keep track of the set of sports followed/done by a user
      */
-
+	final Set<Sport> userSports = new HashSet<>();
     /**
      * Builds a new {@link Sport2SocialNetworkUserImpl}.
      * 
@@ -75,7 +80,7 @@ public class Sport2SocialNetworkUserImpl<U extends User> extends SocialNetworkUs
      *            a sport followed/done by the user
      */
     public void addSport(final Sport sport) {
-
+    	this.userSports.add(sport);
     }
 
     /**
@@ -87,7 +92,10 @@ public class Sport2SocialNetworkUserImpl<U extends User> extends SocialNetworkUs
      * @return true if user likes sport s
      */
     public boolean likesSport(final Sport s) {
-        return false;
+    	if(this.userSports.contains(s)) {
+    		return true;
+    	}
+    	return false;
     }
 
     /*
@@ -100,18 +108,31 @@ public class Sport2SocialNetworkUserImpl<U extends User> extends SocialNetworkUs
      * 
      * @return the set of individual sport this user practices/follows
      */
-    /*
-     * public Set<Sport> getIndividualSports() { return null; }
-     * 
-     * 
-     * /** Returns the set of sports which are practiced in a given place.
+    public Set<Sport> getIndividualSports(){ 
+    	Set<Sport> individualSport = new HashSet<>();
+    	for(Sport x : this.userSports) {
+    		if(x.isIndividualSport()) {
+    			individualSport.add(x);
+    		}
+    	}
+    	return individualSport;
+    }
+     
+     /** Returns the set of sports which are practiced in a given place.
      * 
      * @param p the place in which the sport is practiced in order to be
      * included in the resulting set
      * 
      * @return the set of sport practiced in a given place
      */
-    /*
-     * public Set<Sport> getSportPracticedInPlace(Place p) { return null; }
-     */
+    public Set<Sport> getSportPracticedInPlace(Place p) { 
+    	Set<Sport> inplaceSport = new HashSet<>();
+    	for(Sport x : this.userSports) {
+    		if(x.getPlace() == p) {
+    			inplaceSport.add(x);
+    		}
+    	}
+    	return inplaceSport;
+    }
+     
 }
